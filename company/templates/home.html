@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Home</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="home-page">
+
+    <header class="top-bar">
+        <div class="welcome-message">
+            Welcome, <span class="username">{{ request.user.username }}</span>
+        </div>
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit" class="logout-button">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </form>
+    </header>
+
+    <main>
+        <section class="container">
+            <div class="home-header">
+                <h1>Dashboard</h1>
+            </div>
+            <p class="dashboard-intro">This is your personalized portal dashboard. Here you can get a quick overview of your activities and navigate to different sections of the application.</p>
+
+            <div class="dashboard-sections">
+                <div class="dashboard-card">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>Current Tasks</h3>
+                    <p>View all your assigned and ongoing tasks.</p>
+                    <a href="#" class="card-button">Go to Tasks</a>
+                </div>
+                <div class="dashboard-card">
+                    <i class="fas fa-hourglass-start"></i>
+                    <h3>Pending Items</h3>
+                    <p>Check out items awaiting your action or approval.</p>
+                    <a href="#" class="card-button">View Pending</a>
+                </div>
+                <div class="dashboard-card">
+                    <i class="fas fa-check-double"></i>
+                    <h3>Completed Work</h3>
+                    <p>Review your successfully finished projects and tasks.</p>
+                    <a href="#" class="card-button">See Completed</a>
+                </div>
+                <div class="dashboard-card">
+                    <i class="fas fa-chart-pie"></i>
+                    <h3>Performance Report</h3>
+                    <p>Access detailed reports on your performance and metrics.</p>
+                    <a href="#" class="card-button">View Report</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        &copy; 2025 Company's Portal. All rights reserved.
+    </footer>
+
+</body>
+</html>

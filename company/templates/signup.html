@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Company Portal</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="auth-bg">
+    <div class="form-wrapper">
+        <div class="form-container">
+            <h2 class="form-title">Sign Up</h2>
+            <form id="signupForm" method="POST">
+                {% csrf_token %}
+
+                <!-- Firstname -->
+                <div class="coolinput">
+                    <input type="text" name="first_name" placeholder=" " required />
+                    <label class="text">Firstname</label>
+                </div>
+
+                <!-- Lastname -->
+                <div class="coolinput">
+                    <input type="text" name="last_name" placeholder=" " required />
+                    <label class="text">Lastname</label>
+                </div>
+
+                <!-- Username -->
+                <div class="coolinput">
+                    <input type="text" name="username" placeholder=" " required />
+                    <label class="text">Username</label>
+                </div>
+
+                <!-- Email -->
+                <div class="coolinput">
+                    <input type="email" id="email" name="email" placeholder=" " required />
+                    <label class="text">Email (must end with @gmail.com)</label>
+                </div>
+
+                <!-- Password -->
+                <div class="coolinput password-container">
+                    <input type="password" id="password" name="password1" class="password-field" placeholder=" " required oninput="validatePassword()" />
+                    <label class="text">
+                        Password
+                        <span class="password-hint"> (Min 8 chars, 1 capital, 1 number, 1 special)</span>
+                    </label>
+                    <div class="password-strength-bar" id="strength-bar"></div>
+                    <button type="button" class="toggle-password" onclick="togglePassword(this)">🔒</button>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="coolinput password-container">
+                    <input type="password" id="confirm_password" name="password2" class="password-field" placeholder=" " required />
+                    <label class="text">Confirm Password</label>
+                    <button type="button" class="toggle-password" onclick="togglePassword(this)">🔒</button>
+                </div>
+
+                <!-- Error Message -->
+                <p class="error-message" id="password-error" style="display: none;">❌</p>
+
+                <!-- Submit Button -->
+                <button type="submit" class="auth-button">Register</button>
+
+                <!-- Sign In Link -->
+                <p class="auth-link">Already have an account? <a href="{% url 'signin' %}">Login here</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function togglePassword(button) {
+            const container = button.closest('.password-container');
+            const input = container.querySelector('.password-field');
+            input.type = input.type === "password" ? "text" : "password";
+            button.textContent = input.type === "password" ? "🔒" : "🔓";
+        }
+
+        function validatePassword() {
+            const password = document.getElementById("password").value;
+            const bar = document.getElementById("strength-bar");
+
+            const hasUpper = /[A-Z]/.test(password);
+            const hasDigit = /\d/.test(password);
+            const hasSpecial = /[!@#$%^&*(),.?":{}|\-_<>]/.test(password);
+            const isLongEnough = password.length >= 8;
+
+            let strength = 0;
+            if (hasUpper) strength++;
+            if (hasDigit) strength++;
+            if (hasSpecial) strength++;
+            if (isLongEnough) strength++;
+
+            const colors = ["red", "orange", "yellow", "green"];
+            bar.style.width = `${(strength / 4) * 100}%`;
+            bar.style.backgroundColor = colors[strength - 1] || "red";
+        }
+
+        document.querySelector("input[name='username']").addEventListener("blur", async function () {
+            const username = this.value.trim();
+            const errorText = document.getElementById("password-error");
+
+            if (!username) return;
+
+            const res = await fetch(`/check_username?username=${username}`);
+            const data = await res.json();
+
+            if (data.exists) {
+                errorText.textContent = "❌ Username already exists!";
+                errorText.style.display = "block";
+            } else {
+                errorText.style.display = "none";
+            }
+        });
+
+        document.getElementById("signupForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const data = new FormData(form);
+            const errorText = document.getElementById("password-error");
+
+            errorText.style.display = "none";
+
+            const email = data.get("email");
+            const pass = data.get("password1");
+            const confirm = data.get("password2");
+
+            if (!email.endsWith("@gmail.com")) {
+                errorText.textContent = "❌ Email must end with @gmail.com";
+                errorText.style.display = "block";
+                return;
+            }
+
+            if (pass !== confirm) {
+                errorText.textContent = "❌ Passwords do not match.";
+                errorText.style.display = "block";
+                return;
+            }
+
+            try {
+                const response = await fetch("{% url 'signup' %}", {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+                    },
+                    body: data
+                });
+
+                const text = await response.text();
+
+                if (text.includes("Registration successful")) {
+                    window.location.href = "{% url 'signin' %}";
+                } else {
+                    document.querySelector(".form-container").innerHTML = text;
+                }
+            } catch (error) {
+                errorText.textContent = "❌ Something went wrong. Try again.";
+                errorText.style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Company Portal</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="auth-bg">
+    <div class="form-wrapper">
+        <form method="POST" class="form-container">
+            {% csrf_token %}
+            <h2 class="form-title">Sign In</h2>
+
+            <!-- Display messages -->
+            {% if messages %}
+                <div class="alert">
+                    {% for message in messages %}
+                        <p class="error-message">{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Username Field -->
+            <div class="coolinput">
+                <input type="text" name="username" placeholder=" " required>
+                <label class="text">Username</label>
+            </div>
+
+            <!-- Password Field -->
+            <div class="coolinput password-container">
+                <input type="password" name="password" placeholder=" " class="password-field" required oninput="showToggle(this)" onfocus="showToggle(this)">
+                <label class="text">
+                    Password
+                    <span class="password-hint"> (min 8 characters)</span>
+                </label>
+                <button type="button" class="toggle-password" onclick="togglePassword(this)">🔒</button>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="auth-button">Login</button>
+
+            <!-- Navigation Link -->
+            <p class="auth-link">Don't have an account? <a href="{% url 'signup' %}">Register here</a></p>
+        </form>
+    </div>
+
+    <script>
+        // Function to toggle password visibility
+        function togglePassword(button) {
+            const passwordField = button.closest('.password-container').querySelector('.password-field');
+            const isPassword = passwordField.type === 'password';
+            passwordField.type = isPassword ? 'text' : 'password';
+            button.textContent = isPassword ? '🔓' : '🔒';
+        }
+
+        // Function to display the toggle button when the user focuses on the password field
+        function showToggle(input) {
+            const toggleBtn = input.closest('.password-container').querySelector('.toggle-password');
+            toggleBtn.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
