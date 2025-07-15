@@ -2,7 +2,7 @@
 
 ## 🎉 Live Now: [TaskNest on Render](https://tasknest-company-portal.onrender.com)
 
-![Signup Page](https://raw.githubusercontent.com/bharaths002/company-portal/main/path/to/signup_thumbnail.png)
+
 
 ---
 
