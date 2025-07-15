@@ -9,6 +9,8 @@
 ## 🌟 Tagline:
 
 **"Boom! A brand new project launch - TaskNest, where employee management meets sleek design!"**
+[![Deploy on Render](https://img.shields.io/badge/Deployed%20on-Render-5f5fff?logo=render&logoColor=white&style=for-the-badge)](https://tasknest-company-portal.onrender.com)
+
 
 ---
 
@@ -86,30 +88,30 @@ cd company-portal
 
 2. Create a virtual environment:
 
-
+```bash
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
-
+```
 
 3. Install dependencies:
 
-
+```bash
 pip install -r requirements.txt
-
+```
 
 4. Run locally:
 
-
+```bash
 python manage.py runserver
-
+```
 
 ### 🏠 Deployment (Render)
 
 * `Build Command:`
 
-
+```bash
 pip install -r requirements.txt && python manage.py collectstatic --noinput
-
+```
 
 * `Start Command:`
 
@@ -120,8 +122,8 @@ gunicorn company.wsgi:application
 * Set environment variables:
 
   * `DEBUG=False`
-  * `ALLOWED_HOSTS=yourdomain.onrender.com`
-  * `DJANGO_SECRET_KEY=your_secure_key`
+  * `ALLOWED_HOSTS=tasknest-company-portal.onrender.com
+  * `DJANGO_SECRET_KEY=django-insecure-&6tj*a&e_2_-5sk)=w!68-98(lb3v-tfe@pv$7ugc)pz(+2k6f
 
 ---
 
@@ -148,7 +150,7 @@ gunicorn company.wsgi:application
 
 **Bharath S**
 Full Stack Developer | Python & Django Enthusiast
-[LinkedIn](https://www.linkedin.com/in/yourprofile) | [GitHub](https://github.com/bharaths002)
+[LinkedIn]([https://www.linkedin.com/in/bharaths18?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3ByqxqTf9xRe2L4IoVjo85DQ%3D%3D]) | [GitHub](https://github.com/bharaths002)
 
 ---
 
