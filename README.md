@@ -150,7 +150,7 @@ gunicorn company.wsgi:application
 
 **Bharath S**
 Full Stack Developer | Python & Django Enthusiast
-[LinkedIn]([https://www.linkedin.com/in/bharaths18?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3ByqxqTf9xRe2L4IoVjo85DQ%3D%3D]) | [GitHub](https://github.com/bharaths002)
+[LinkedIn](https://www.linkedin.com/in/bharaths18?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3ByqxqTf9xRe2L4IoVjo85DQ%3D%3D) | [GitHub](https://github.com/bharaths002)
 
 ---
 
